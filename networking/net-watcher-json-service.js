@@ -9,7 +9,7 @@ if(!filename){
 
 net.createServer(connection => {
 	//Reporting.
-	console.log('Subscriber connectd.');
+	console.log('Subscriber connected.');
 	connection.write(JSON.stringify({type: 'watching', file: filename}) + '\n');
 
 	//Watcher setup.
