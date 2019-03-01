@@ -20,6 +20,6 @@ net.createServer(connection => {
 	//Cleanup.
 	connection.on('close', () => {
 		console.log('Subscriber disconnected.');
-		watcher.cloe();
+		watcher.close();
 	});
 }).listen(60300, () => console.log('Listening for subscribers...'));
