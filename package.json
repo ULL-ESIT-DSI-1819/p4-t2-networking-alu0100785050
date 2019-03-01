@@ -2,13 +2,14 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
+    "node-watch": "^0.6.0",
     "promise": {
-      "version": "8.0.2",
-      "resolved": "https://registry.npmjs.org/promise/-/promise-8.0.2.tgz",
       "integrity": "sha512-EIyzM39FpVOMbqgzEHhxdrEhtOSDOtjMZQ0M6iVfCE+kWNgCkAyOdnuCWqfmflylftfadU6FkiMgHZA2kUzwRw==",
       "requires": {
         "asap": "~2.0.6"
-      }
+      },
+      "resolved": "https://registry.npmjs.org/promise/-/promise-8.0.2.tgz",
+      "version": "8.0.2"
     }
   }
 }
