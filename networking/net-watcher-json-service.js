@@ -14,7 +14,7 @@ net.createServer(connection => {
 
 	//Watcher setup.
 	const watcher = fs.watch(filename, () => connection.write(
-		JSON.stringify({tpe: 'changed', timestamp: Date.now()}) + '\n'));
+		JSON.stringify({type: 'changed', timestamp: Date.now()}) + '\n'));
 		
 
 	//Cleanup.
