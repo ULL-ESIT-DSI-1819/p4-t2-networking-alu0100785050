@@ -1,3 +1,4 @@
+'use strict';
 const​ fs = require(​'fs'​);
 ​const​ net = require(​'net'​);
 ​const​ filename = process.argv[2];
