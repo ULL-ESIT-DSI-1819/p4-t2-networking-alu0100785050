@@ -17,6 +17,7 @@ describe('LDJClient', () => {
 			assert.deepEqual(message, {foo: 'bar'});
 			done();
 		});
-		stream.emit('data', '{"foo":"bar"}\n');
+		stream.emit('data', '{"foo":');
+		process.nextTick(() => stream.emit('data', '"bar"}\n'));
 	});
 });
