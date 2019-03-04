@@ -156,6 +156,111 @@ Para liberar al programa cliente del peligro de separar mensajes JSON, implement
 
 ### Herencia en Node
 
+LDJClient es una clase, lo que significa que otros códigos pueden llamarla para obtener una instancia. Dentro del constructor llamamos a *super* para invocar a la función de construcción de *EventEmitter*. Cuando se esté implementando una clase que extiende otra clase, se debe empezar llamando a super, con el constructor apropiado.
+
+~~~
+const EventEmitter = require('events').EventEmitter;
+ class LDJClient extends EventEmitter {
+    constructor(stream) {
+    super();
+ 	  }
+ 	}
+~~~
+
+### Eventos de Datos de Búfer
+
+Vamos a usar el paramétro *stream* en el LDJClient para recuperar y mandar la entrada. El objetivo es coger los datos entrantes desde el stream y convertirlos en eventos de mensajes que contienen los objetos de mensajes transformados.
+
+El siguiente constructor actualizado coge trozos de datos entrantes y los pasa por un escáner que busca los finales de línea.
+~~~
+constructor(stream) {
+		super();
+		let buffer = '';
+		stream.on('data', data => {
+			buffer += data;
+			let boundary = buffer.indexOf('\n');
+			while (boundary !== -1) {
+				const input = buffer.substring(0,boundary);
+				buffer = buffer.substring(boundary+1);
+				this.emit('message', JSON.parse(input));
+				boundary = buffer.indexOf('\n');
+			}
+		});
+	}
+~~~
+  
+Comenzamos llamando a super, y creando una variable de cadena llamada buffer. Más adelante usamos *stream.on* para manejar eventos de datos. Cada cadena de mensaje se manda a través de *JSON.parse* y finalmente emitido por LDJClient como un evento de mensaje via *this.emit*.
+
+Ahora necesitamos poner esta clase en un módulo Node.js para que nuestro cliente pueda usarlo.
+
+### Exportando Funcionalidad en un Módulo
+
+Crearemos un directorio llamado *lib*, por convenio en Node.js se almacena todo código de soporte en el directorio *lib*. Lo guardaremos como ***ldj-client.js***.
+
+![module](img/15.png)
+
+El objeto *module.exports* es el puente entre el código del módulo y el mundo exterior.
+
+### Importando un Módulo Node.js Customizado
+
+Modificaremos el cliente para usar el módulo:
+
+![modlcient](img/16.png)
+
+Para asegurar que se ha resuelto el problema del mensaje separado, ejecutamos el servicio:
+
+![runmodule](img/17.png)
+
+Vemos que funciona correctamente.
+
+## Desarrollando Pruebas Unitarias con Mocha
+
+Mocha es un entorno de pruebas para Node.js. Cuenta con diferentes estilos para describir sus tests. Usaremos el Desarrollo Conducido por el Comportamiento (BDD). Para hacer uso de Mocha primero lo instalamos con npm.
+
+### Instalando Mocha con npm
+
+Ejecutamos **npm init -y** para generar un *package.json*:
+
+![json](img/18.png)
+
+Luego ejecutamos **npm install --save-dev --save-exact mocha@3.4.2**. Cuando la instalación acabe tendremos un directorio *node_modules* que contiene las dependencias de Mocha. Y en el fichero *package.json* encontraremos las dependencias:
+
+![npm](img/19.png)
+
+En Node.js hay varios tipos de dependencias, las regulares y las de desarrollo (regular y dev). Ambas se instalan cuando se ejecuta **npm install** sin argumentos extra, si queremos instalar solo las regulares y no las dev, se ejecuta **npm install --production** o estableciendo la variable de entorno NODE_ENV a *production*.
+
+### Versionamiento Semántico de Paquetes
+
+La etiqueta *--save-exact* le dice a npm que versión específica queremos instalar. Por defecto, npm usa el versionamiento semántico para encontrar la mejor versión disponible de un paquete.
+
+El número de la versión consta de tres partes unidas por puntos, la versión principal, la versión menor y el parche.
+
+* Si la modificación del código no introduce o elimina ninguna funcionalidad, se incrementa la versión del parche.
+* Si la modificación introduce funcionalidad pero no elimina o altera la funcionalidad ya existente, se incrementa la versión menor y se resetea el parche.
+* Si la modificación altera o rompe la funcionalidad existente, se incrementa la versión principal y se resetea la versión menor y el parche.
+
+### Escribiendo Pruebas Unitarias con Mocha
+
+Crearemos un directorio llamado *test*, esto está establecido por convenio para todos los proyectos de Node.js, y por defecto Mocha buscará los tests en este directorio.
+
+Este es un código de pruebas, primero llamamos a los módulos que vamos a necesitar. Después usamos el método *describe* para crear un contexto que envuelve las pruebas con LDJClient. El segundo argumento de *describe* es una función que contiene el contenido de la prueba. Dentro de la prueba primero declaramos dos variables con *let*, entonces en *beforeEach* asignamos instancias a estas dos variables. Para terminar llamamos a *it* para poner a prueba un comportamiento específico de la clase.
+
+![runmodule](img/20.png)
+
+### Ejecutando Pruebas de Mocha desde npm
+
+Para ejecutar Mocha usando npm, debemos añadir una entrada al *package.json*, en la sección scripts.
+
+![runmodule](img/21.png)
+
+Ejecutamos las pruebas con npm:
+
+![runmodule](img/22.png)
 
 
 
+
+
+
+
+  
