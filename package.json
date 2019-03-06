@@ -2,7 +2,8 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
-    "gulp": "^4.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-shell": "^0.7.0",
     "node-watch": "^0.6.0",
     "promise": {
       "integrity": "sha512-EIyzM39FpVOMbqgzEHhxdrEhtOSDOtjMZQ0M6iVfCE+kWNgCkAyOdnuCWqfmflylftfadU6FkiMgHZA2kUzwRw==",
@@ -14,6 +15,6 @@
     }
   },
   "devDependencies": {
-    "gulp-shell": "^0.7.0"
+    "gulp": "^3.9.1"
   }
 }
