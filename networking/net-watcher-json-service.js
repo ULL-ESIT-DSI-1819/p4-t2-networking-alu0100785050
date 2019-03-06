@@ -7,6 +7,10 @@ if(!filename){
 	throw Error('Error: No filename specified.');
 }
 
+/**
+ * @description Función que establece conexión
+ * @name createServer
+ */
 net.createServer(connection => {
 	//Reporting.
 	console.log('Subscriber connected.');
