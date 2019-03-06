@@ -10,4 +10,4 @@ gulp.task("nc", shell.task("nc localhost 60300"));
 
 gulp.task("-U", shell.task("nc -U /tmp/watcher.sock"));
 
-gulp.task("node", shell.task("node net-watcher-json-client.js"));
+gulp.task("node", shell.task("node net-watcher-ldj-client.js"));
