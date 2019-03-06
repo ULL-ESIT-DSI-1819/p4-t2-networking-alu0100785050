@@ -10,7 +10,7 @@ describe('LDJClient', () => {
 	beforeEach(() => {
 		stream = new EventEmitter();
 		client = new LDJClient(stream);
-		//clientnull = new LDJClient(null);
+		clientnull = new LDJClient(null);
 	});
 
 	it('should emit a message event from a single data event', done => {
@@ -26,7 +26,7 @@ describe('LDJClient', () => {
 
 	});*/
 
-	/*it('pass null to LDJClient constructor', done => {
+	it('pass null to LDJClient constructor', done => {
 		assert.throws(clientnull, Error, "Error thrown");
-	});*/
+	});
 });
