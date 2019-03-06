@@ -10,6 +10,7 @@ describe('LDJClient', () => {
 	beforeEach(() => {
 		stream = new EventEmitter();
 		client = new LDJClient(stream);
+		clientnull = new LDJClient(null);
 	});
 
 	it('should emit a message event from a single data event', done => {
@@ -19,5 +20,13 @@ describe('LDJClient', () => {
 		});
 		stream.emit('data', '{"foo":');
 		process.nextTick(() => stream.emit('data', '"bar"}\n'));
+	});
+
+	/*it('a message is split over two data events from the stream', done => {
+
+	});*/
+
+	it('pass null to LDJClient constructor', done => {
+		assert.throws(clientnull, Error, "Error thrown");
 	});
 });
