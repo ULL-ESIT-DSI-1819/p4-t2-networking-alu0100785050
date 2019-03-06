@@ -2,6 +2,7 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
+    "gulp": "^4.0.0",
     "node-watch": "^0.6.0",
     "promise": {
       "integrity": "sha512-EIyzM39FpVOMbqgzEHhxdrEhtOSDOtjMZQ0M6iVfCE+kWNgCkAyOdnuCWqfmflylftfadU6FkiMgHZA2kUzwRw==",
@@ -11,5 +12,8 @@
       "resolved": "https://registry.npmjs.org/promise/-/promise-8.0.2.tgz",
       "version": "8.0.2"
     }
+  },
+  "devDependencies": {
+    "gulp-shell": "^0.7.0"
   }
 }
