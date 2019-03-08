@@ -257,10 +257,65 @@ Ejecutamos las pruebas con npm:
 
 ![runmodule](img/22.png)
 
+## Problemas resueltos
 
+### Testabilidad
 
+1. Añadir una prueba unitaria para un mensaje que se separa en dos o más eventos de datos desde el stream.
+2. Añadir una prueba unitaria que pase **null** al constructor del cliente, y lance un error.
 
+Creamos las dos pruebas, la primera añade el salto de línea al stream,y la segunda comprueba con el assert si el constructor se ha construido con null.
 
+![test1](img/testability.png)
 
+En el constructor debemos modificarlo para que compruebe si el stream es null y lance el error.
+
+![test2](img/testability2.png)
+
+Comprobamos que las pruebas funcionan correctamente.
+
+![test3](img/testability3.png)
+
+### Robustez
+
+3. El cliente ya maneja casos en los que una cadena correctamente formateada en JSON se divide en múltiples líneas. ¿Qué pasará si los datos entrantes no están formateados como JSON?
+
+El programa abortaría y fallaría porque no sabe manejar ese tipo de error.
+
+4. Escribe una prueba unitaria que envia eventos de datos que no son JSON. 
+
+La prueba es muy sencilla, un assert que emita el stream que no es JSON.
+
+![test4](img/robustnes.png)
+
+El constructor se debe modificar para añadir un bloque try/catch donde comprueba si es JSON o no.
+
+![test5](img/robusntes2.png)
+
+Comprobamos que el test resulta exitoso.
+
+![test6](img/robustnes3.png)
+
+5. ¿Qué pasaría si el último evento de datos completa un mensaje JSON, pero sin el salto de línea final?
+
+El programa abortaría, fallaría porque no sabe manejar dicho problema.
+
+6. Escribe una prueba unitaria donde el objeto stream manda un evento de datos conteninedo solo JSON sin la línea final, seguido de un evento de cierre.
+
+Creamos una prueba unitaria donde añadimos el stream que emite el evento de cierre.
+
+![test7](img/robustnes4.png)
+
+Modificamos el constructor añadiendo un stream.on donde comprueba si se encuentra el '}' final, y no el salto de línea.
+
+![test8](img/robustnes5.png)
+
+Vemos que todos los test han acabado exitosamente.
+
+![test9](img/robustnes6.png)
+
+7. ¿Debería el cliente emitir un evento de cierre para los listeners?
+
+Debería emitirlo cuando el listener no esté enviando nada, y cuando el listener haya avisado de que cierra conexión.
 
   
