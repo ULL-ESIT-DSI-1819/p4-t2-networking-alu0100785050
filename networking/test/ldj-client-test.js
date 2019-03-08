@@ -43,6 +43,7 @@ describe('LDJClient', () => {
 		assert.throws(() => {
 			stream.emit('data', '{"foo\n');
 		});
+		done();
 	});
 
 	it(`should show messages even without '\\n' delimiter on stream close event`, done => {
