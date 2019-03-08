@@ -10,7 +10,6 @@ describe('LDJClient', () => {
 	beforeEach(() => {
 		stream = new EventEmitter();
 		client = new LDJClient(stream);
-		clientnull = new LDJClient(null);
 	});
 
 	it('should emit a message event from a single data event', done => {
@@ -22,11 +21,21 @@ describe('LDJClient', () => {
 		process.nextTick(() => stream.emit('data', '"bar"}\n'));
 	});
 
-	/*it('a message is split over two data events from the stream', done => {
+	it('should emit a message from split data events', done => {
+		client.on('message', message => {
+			assert.deepEqual(message, { foo: 'bar' });
+	    		done();
 
-	});*/
+		});
+		stream.emit('data', '{"foo');
+		process.nextTick(() => stream.emit('data', '": "bar"}'));
+		process.nextTick(() => stream.emit('data', '\n'));
+	});
 
 	it('pass null to LDJClient constructor', done => {
-		assert.throws(clientnull, Error, "Error thrown");
+		assert.throws(() => {
+			new LDJClient(null);
+		});
+		done();
 	});
 });
