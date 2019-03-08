@@ -20,6 +20,21 @@ class LDJClient extends EventEmitter {
 				boundary = buffer.indexOf('\n');
 			}
 		});
+
+		stream.on('close', () => {
+			let boundary = buffer.indexOf('}');
+			if(boundary !== -1){
+				const input = buffer.substring(0, boundary+1);
+				try {
+					this.emit('message', JSON.parse(input));
+				} catch (e) {
+					throw new Error('Non JSON message');
+				}
+			} else {
+				buffer = '';
+			}
+			this.emit('close');
+		});
 	}
 
 	static connect(stream) {

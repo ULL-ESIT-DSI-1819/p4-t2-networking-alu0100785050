@@ -44,4 +44,13 @@ describe('LDJClient', () => {
 			stream.emit('data', '{"foo\n');
 		});
 	});
+
+	it(`should show messages even without '\\n' delimiter on stream close event`, done => {
+		client.on('message', message => {
+			assert.deepEqual(message, { foo: 'bar' });
+			done();
+		});
+		stream.emit('data', '{"foo": "bar"}');
+		stream.emit('close');
+	});
 });
