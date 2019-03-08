@@ -12,7 +12,11 @@ class LDJClient extends EventEmitter {
 			while (boundary !== -1) {
 				const input = buffer.substring(0,boundary);
 				buffer = buffer.substring(boundary+1);
-				this.emit('message', JSON.parse(input));
+				try {
+					this.emit('message', JSON.parse(input));
+				} catch (e) {
+					throw new Error('Non JSON message sent to client.');
+				}
 				boundary = buffer.indexOf('\n');
 			}
 		});
