@@ -38,4 +38,10 @@ describe('LDJClient', () => {
 		});
 		done();
 	});
+
+	it('should throw an exception when a non JSON message is sent', done => {
+		assert.throws(() => {
+			stream.emit('data', '{"foo\n');
+		});
+	});
 });
