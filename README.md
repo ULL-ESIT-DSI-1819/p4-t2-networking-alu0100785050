@@ -1,7 +1,7 @@
 # Práctica 4 - Networking (Tema 3, Nodejs The Right Way)
 
 ### Integración continua con Travis
-En este link se accede directamente al estado de travis -> [![Build Status](https://travis-ci.org/ULL-ESIT-DSI-1819/p4-t2-networking-alu0100785050)](https://travis-ci.org/ULL-ESIT-DSI-1819/p4-t2-networking-alu0100785050)
+En este link se accede directamente al estado de travis -> [![Build Status](https://travis-ci.org/ULL-ESIT-DSI-1819/p4-t2-networking-alu0100785050.svg?branch=master)](https://travis-ci.org/ULL-ESIT-DSI-1819/p4-t2-networking-alu0100785050)
 
 ## Conexiones con Sockets 
 
